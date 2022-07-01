@@ -3,7 +3,7 @@ package jana60;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Evento {
+public class Evento implements Comparable<Evento> {
 
 	// Attributi
 	private String titolo;
@@ -101,6 +101,36 @@ public class Evento {
 	public String toString() {
 		return "L'evento selezionato inizierà il giorno: " + dataFormattata() + ". Il titolo dell'evento è: " + titolo
 				+ ". Buon divertimento!";
+	}
+
+	@Override
+	public int compareTo(Evento o) {
+		// Inizio la comparazione dall'anno
+		// Se è più piccolo ritorno -1
+		if (this.data.getYear() < o.data.getYear()) {
+			return -1;
+		}
+		// Se è uguale apro altro if per continuare a comparare ma con il mese
+		else if (this.data.getYear() == o.data.getYear()) {
+			if (this.data.getMonthValue() < o.data.getMonthValue()) {
+				return -1;
+			} else if (this.data.getMonthValue() == o.data.getMonthValue()) {
+				if (this.data.getDayOfMonth() < o.data.getDayOfMonth()) {
+					return -1;
+				} else if (this.data.getDayOfMonth() == o.data.getDayOfMonth()) {
+					return this.titolo.compareTo(o.titolo);
+
+				} else
+					return 1;
+
+			} else {
+				return 1;
+			}
+		}
+		// se è più grande ritorno 1;
+		else {
+			return 1;
+		}
 	}
 
 };
