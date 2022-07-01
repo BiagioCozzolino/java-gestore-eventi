@@ -65,19 +65,19 @@ public class Evento {
 
 	}
 
-	public void prenota() throws Exception {
-		if (numeroPostiPrenotati == numeroPostiTotali) {
+	public void prenota(int num) throws Exception {
+		if (postiDisponibili() < num) {
 			throw new Exception(
-					"Mi dispiace ma i posti disponibili per questo evento sono terminati. Scegli un altro evento!");
+					"Mi dispiace ma i posti disponibili per questo sono minori delle persone che vuoi prenotare. Scegli un altro evento o meno invitati (In caso di 0 posti rimanenti scegli un altro evento.");
 
 		} else if (data.isBefore(LocalDate.now())) {
 			throw new Exception("Mi dispiace ma l'evento selezionato è già passato!");
 		} else {
-			numeroPostiPrenotati++;
+			numeroPostiPrenotati += num;
 		}
 	}
 
-	public void disdici() throws Exception {
+	public void disdici(int num) throws Exception {
 		if (numeroPostiPrenotati == 0) {
 			throw new Exception(
 					"Non ci sono prenotazioni per questo evento, non è possibile disdire se non hai prenotato!");
@@ -85,8 +85,12 @@ public class Evento {
 		} else if (data.isBefore(LocalDate.now())) {
 			throw new Exception("Mi dispiace ma l'evento selezionato è già passato, è troppo tardi per disdire!");
 		} else {
-			numeroPostiPrenotati--;
+			numeroPostiPrenotati -= num;
 		}
+	}
+
+	public int postiDisponibili() {
+		return numeroPostiTotali - numeroPostiPrenotati;
 	}
 
 	public String dataFormattata() {
