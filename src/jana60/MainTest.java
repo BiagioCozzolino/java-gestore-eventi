@@ -68,6 +68,24 @@ public class MainTest {
 					Evento nuovoEvento = new Evento(titolo, data, postiTotali);
 					System.out.println("Complimenti hai appena creato un nuovo evento: " + nuovoEvento);
 
+					System.out.println("L'evento appena creato è una Conferenza? digita solo Si o No: ");
+					String sceltaConferenza = scan.nextLine();
+					if (sceltaConferenza.equalsIgnoreCase("Si")) {
+						System.out.println("Inserire l'argomento della conferenza: ");
+						String argomento = scan.nextLine();
+						System.out.println("Inserisci ora i dati dell'oratore:");
+						System.out.println("Nome dell'oratore: ");
+						String nome = scan.nextLine();
+						System.out.println("Cognome dell'oratore: ");
+						String cognome = scan.nextLine();
+						System.out.println("Titolo dell'oratore: ");
+						String titolooratore = scan.nextLine();
+
+						Oratore nuovoOratore = new Oratore(nome, cognome, titolooratore);
+						Conferenza nuovaConferenza = new Conferenza(titolo, data, postiTotali, argomento, nuovoOratore);
+						System.out.println(nuovaConferenza);
+					}
+
 					boolean nuovaOperazione = true;
 					do {
 						boolean sceltaErrata = true;
