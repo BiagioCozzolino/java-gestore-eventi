@@ -1,23 +1,20 @@
 package jana60;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class ProgrammEventi {
 
 	public static void main(String[] args) throws Exception {
-		LocalDate data = LocalDate.of(2025, 01, 28);
-		LocalDate data2 = LocalDate.of(2026, 03, 26);
-		LocalDate data3 = LocalDate.of(2028, 01, 21);
-		LocalDate data4 = LocalDate.of(2028, 01, 21);
-		LocalDate data5 = LocalDate.of(2028, 01, 21);
-		LocalDate data6 = LocalDate.of(2025, 03, 27);
-		LocalDate data7 = LocalDate.of(2023, 04, 18);
-
-		// Formattatore data
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate data = LocalDate.of(2022, 7, 28);
+		LocalDate data2 = LocalDate.of(2022, 8, 1);
+		LocalDate data3 = LocalDate.of(2028, 1, 21);
+		LocalDate data4 = LocalDate.of(2028, 1, 21);
+		LocalDate data5 = LocalDate.of(2028, 1, 21);
+		LocalDate data6 = LocalDate.of(2025, 3, 27);
+		LocalDate data7 = LocalDate.of(2022, 9, 18);
 
 		ArrayList<Evento> listaDiEventi = new ArrayList<Evento>();
 
@@ -37,12 +34,46 @@ public class ProgrammEventi {
 		listaDiEventi.add(evento6);
 		listaDiEventi.add(evento7);
 
-		System.out.println(listaDiEventi);
 		Collections.sort(listaDiEventi);
-
 		for (Evento current : listaDiEventi) {
 			System.out.println(current);
 		}
-	}
 
+		// Divisione in altre due liste Recenti e Futuri con Interator
+
+		// Dichiaro le due liste
+		ArrayList<Evento> prossimiEventi = new ArrayList<Evento>();
+		ArrayList<Evento> eventiFuturi = new ArrayList<Evento>();
+
+		LocalDate today = LocalDate.now();
+		Iterator<Evento> EventiIterator = listaDiEventi.iterator();
+		while (EventiIterator.hasNext()) {
+			Evento eventoCorrente = EventiIterator.next();
+			if (eventoCorrente.getData().getYear() == today.getYear()) {
+				if (eventoCorrente.getData().getMonthValue() == today.getMonthValue()) {
+					prossimiEventi.add(eventoCorrente);
+				} else if ((today.getMonthValue() + 1) == eventoCorrente.getData().getMonthValue()) {
+					if (eventoCorrente.getData().getDayOfMonth() <= today.getDayOfMonth()) {
+						prossimiEventi.add(eventoCorrente);
+					}
+
+				} else {
+					eventiFuturi.add(eventoCorrente);
+				}
+
+			} else {
+				eventiFuturi.add(eventoCorrente);
+			}
+
+		}
+		System.out.println("Ecco la lista degli eventi Prossimi (Entro 1 mese): ");
+		for (Evento recenti : prossimiEventi) {
+			System.out.println(recenti);
+		}
+		System.out.println("Ecco la lista degli eventi Futuri (Oltre 1 mese): ");
+		for (Evento futuri : eventiFuturi) {
+
+			System.out.println(futuri);
+		}
+	}
 }

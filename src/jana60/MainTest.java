@@ -7,22 +7,30 @@ public class MainTest {
 
 	public static void main(String[] args) {
 
+		// Inizializzo lo Scanner
 		Scanner scan = new Scanner(System.in);
 
 		try {
+			// Creo la prima flag che tramite un doo while mi darà la possibilità di
+			// inserire più eventi cominciando da capo
 			boolean flag = true;
 			do {
 				int key;
 				System.out.println("Ciao, benvenuto nella piattaforma del Gestore Utenti!");
 				System.out.println("Inserisci 1 per inserire un nuovo evento e 2 per uscire.");
+				// Prendo la scelta dell'utente e la metto nella key
 				key = Integer.parseInt(scan.nextLine());
 				switch (key) {
+
+				// Caso 1 creazione nuovo evento
 				case 1:
 					System.out.println("Benvenuto nella sezione creazione eventi!");
 					System.out.print("Inserisci il titolo dell'evento: ");
 					String titolo = scan.nextLine();
 					boolean giornoErrato = true;
 					int giornoEvento;
+					// Inserisco un do while per non farmi cominciare da capo nel caso sbagli ad
+					// inserire un campo, effettuato anche per mese e anno
 					do {
 						System.out.println("Inserisci il giorno dell'evento (1-31): ");
 						giornoEvento = Integer.parseInt(scan.nextLine());
@@ -61,15 +69,24 @@ public class MainTest {
 						}
 					} while (annoErrato);
 
+					// Solo se i dati sono tutti esatti allora si crea la mia data;
+
 					LocalDate data = LocalDate.of(annoEvento, meseEvento, giornoEvento);
 
+					// Chiedo i posti massimi dell'evento
 					System.out.println("Inserisci il numero di posti totali: ");
 					int postiTotali = Integer.parseInt(scan.nextLine());
+
+					// Creo il mio nuovo evento di classe Evento
 					Evento nuovoEvento = new Evento(titolo, data, postiTotali);
+					// Stampo il risultato di tutti i dati inseriti dall'utente
 					System.out.println("Complimenti hai appena creato un nuovo evento: " + nuovoEvento);
 
+					// Chiedo se è una conferenza oppure no
 					System.out.println("L'evento appena creato è una Conferenza? digita solo Si o No: ");
 					String sceltaConferenza = scan.nextLine();
+					// Se scegli SI allora entra nell'if dove fa inserire tutti i campi della classe
+					// Conferenza
 					if (sceltaConferenza.equalsIgnoreCase("Si")) {
 						System.out.println("Inserire l'argomento della conferenza: ");
 						String argomento = scan.nextLine();
@@ -81,7 +98,10 @@ public class MainTest {
 						System.out.println("Titolo dell'oratore: ");
 						String titolooratore = scan.nextLine();
 
+						// Infine creo prima il nuovo oratore di classe Oratore
 						Oratore nuovoOratore = new Oratore(nome, cognome, titolooratore);
+
+						// Poi creo la nuova Conferenza grazie a Oratore e i dati precedenti
 						Conferenza nuovaConferenza = new Conferenza(titolo, data, postiTotali, argomento, nuovoOratore);
 						System.out.println(nuovaConferenza);
 					}
@@ -90,6 +110,10 @@ public class MainTest {
 					do {
 						boolean sceltaErrata = true;
 						int key2;
+
+						// Chiedo all'utente se desidera inserire prenotazioni all'evento, disdire o
+						// uscire tramite uno swich case verificando con opportuni do while che non
+						// passino valori errati
 						do {
 							System.out.println(
 									" Desideri inserire prenotazioni per questo evento? Digita 1 per inserire prenotazioni - 2 per disdire prenotazioni - 3 per uscire.");

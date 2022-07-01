@@ -78,9 +78,10 @@ public class Evento implements Comparable<Evento> {
 	}
 
 	public void disdici(int num) throws Exception {
-		if (numeroPostiPrenotati == 0) {
+		if (num > numeroPostiPrenotati) {
 			throw new Exception(
-					"Non ci sono prenotazioni per questo evento, non è possibile disdire se non hai prenotato!");
+					"Non è possibile disdire il numero di posti inseriti e maggiore dei posti prenotati ovvero: "
+							+ numeroPostiPrenotati);
 
 		} else if (data.isBefore(LocalDate.now())) {
 			throw new Exception("Mi dispiace ma l'evento selezionato è già passato, è troppo tardi per disdire!");
